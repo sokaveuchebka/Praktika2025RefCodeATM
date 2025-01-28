@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\\u0410\u0440\u0442\u0443\u0440\\Desktop\\MyConsoleATM\\ConsoleATM\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{531F756D-59B8-490A-886C-2F045335B919}|ConsoleATM\\ConsoleATM.csproj|c:\\users\\\u0430\u0440\u0442\u0443\u0440\\desktop\\myconsoleatm\\consoleatm\\consoleatm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{531F756D-59B8-490A-886C-2F045335B919}|ConsoleATM\\ConsoleATM.csproj|solutionrelative:consoleatm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0440\u0442\u0443\u0440\\Desktop\\MyConsoleATM\\ConsoleATM\\ConsoleATM\\Program.cs",
+              "RelativeDocumentMoniker": "ConsoleATM\\Program.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0440\u0442\u0443\u0440\\Desktop\\MyConsoleATM\\ConsoleATM\\ConsoleATM\\Program.cs",
+              "RelativeToolTip": "ConsoleATM\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-28T21:52:46.385Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
