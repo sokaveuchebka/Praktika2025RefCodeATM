@@ -24,6 +24,11 @@ namespace ATMConsoleApp
                 return;
             }
 
+            StartATM(cardNumber);
+        }
+
+        private static void StartATM(string cardNumber)
+        {
             while (true)
             {
                 ShowMenu();
@@ -54,16 +59,6 @@ namespace ATMConsoleApp
                 return false;
             }
 
-            return true;
-        }
-
-        private static bool IsCardNumberValid(string cardNumber)
-        {
-            if (!Users.ContainsKey(cardNumber))
-            {
-                Console.WriteLine("Картка не знайдена.");
-                return false;
-            }
             return true;
         }
 
@@ -99,6 +94,16 @@ namespace ATMConsoleApp
                 default:
                     Console.WriteLine("Невірний вибір, спробуйте ще раз.");
                     break;
+            }
+            return true;
+        }
+
+        private static bool IsCardNumberValid(string cardNumber)
+        {
+            if (!Users.ContainsKey(cardNumber))
+            {
+                Console.WriteLine("Картка не знайдена.");
+                return false;
             }
             return true;
         }
