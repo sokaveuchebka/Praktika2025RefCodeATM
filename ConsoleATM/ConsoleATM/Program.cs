@@ -18,17 +18,14 @@ namespace ATMConsoleApp
 
         public static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.InputEncoding = System.Text.Encoding.UTF8;
             Console.WriteLine("Ласкаво просимо до банкомату!");
             if (!AuthenticateUser(out string cardNumber))
             {
                 return;
             }
 
-            StartATM(cardNumber);
-        }
-
-        private static void StartATM(string cardNumber)
-        {
             while (true)
             {
                 ShowMenu();
@@ -124,37 +121,27 @@ namespace ATMConsoleApp
         private static void Withdraw(string cardNumber)
         {
             Console.Write("Введіть суму для зняття: ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+            if (!TryGetValidAmount(Console.ReadLine(), out decimal amount)) return;
+
+            if (Users[cardNumber].Balance >= amount)
             {
-                if (Users[cardNumber].Balance >= amount)
-                {
-                    Users[cardNumber].Balance -= amount;
-                    Console.WriteLine($"Ви зняли {amount} грн. Ваш залишок: {Users[cardNumber].Balance} грн.");
-                    OnWithdrawal?.Invoke("Зняття коштів успішне.");
-                }
-                else
-                {
-                    Console.WriteLine("Недостатньо коштів.");
-                }
+                Users[cardNumber].Balance -= amount;
+                Console.WriteLine($"Ви зняли {amount} грн. Ваш залишок: {Users[cardNumber].Balance} грн.");
+                OnWithdrawal?.Invoke("Зняття коштів успішне.");
             }
             else
             {
-                Console.WriteLine("Невірна сума.");
+                Console.WriteLine("Недостатньо коштів.");
             }
         }
 
         private static void Deposit(string cardNumber)
         {
             Console.Write("Введіть суму для зарахування: ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
-            {
-                Users[cardNumber].Balance += amount;
-                Console.WriteLine($"Ви зарахували {amount} грн. Ваш новий баланс: {Users[cardNumber].Balance} грн.");
-            }
-            else
-            {
-                Console.WriteLine("Невірна сума.");
-            }
+            if (!TryGetValidAmount(Console.ReadLine(), out decimal amount)) return;
+
+            Users[cardNumber].Balance += amount;
+            Console.WriteLine($"Ви зарахували {amount} грн. Ваш новий баланс: {Users[cardNumber].Balance} грн.");
         }
 
         private static void TransferFunds(string fromCardNumber)
@@ -168,24 +155,29 @@ namespace ATMConsoleApp
             }
 
             Console.Write("Введіть суму для переказу: ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+            if (!TryGetValidAmount(Console.ReadLine(), out decimal amount)) return;
+
+            if (Users[fromCardNumber].Balance >= amount)
             {
-                if (Users[fromCardNumber].Balance >= amount)
-                {
-                    Users[fromCardNumber].Balance -= amount;
-                    Users[toCardNumber].Balance += amount;
-                    Console.WriteLine($"Переказ {amount} грн. успішно виконано. Ваш залишок: {Users[fromCardNumber].Balance} грн.");
-                    OnFundsTransfer?.Invoke("Переказ коштів успішний.");
-                }
-                else
-                {
-                    Console.WriteLine("Недостатньо коштів.");
-                }
+                Users[fromCardNumber].Balance -= amount;
+                Users[toCardNumber].Balance += amount;
+                Console.WriteLine($"Переказ {amount} грн. успішно виконано. Ваш залишок: {Users[fromCardNumber].Balance} грн.");
+                OnFundsTransfer?.Invoke("Переказ коштів успішний.");
             }
             else
             {
-                Console.WriteLine("Невірна сума.");
+                Console.WriteLine("Недостатньо коштів.");
             }
+        }
+
+        private static bool TryGetValidAmount(string input, out decimal amount)
+        {
+            if (decimal.TryParse(input, out amount) && amount > 0)
+            {
+                return true;
+            }
+            Console.WriteLine("Невірна сума.");
+            return false;
         }
     }
 
