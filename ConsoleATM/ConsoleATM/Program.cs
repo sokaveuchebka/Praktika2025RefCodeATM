@@ -19,64 +19,97 @@ namespace ATMConsoleApp
         public static void Main(string[] args)
         {
             Console.WriteLine("Ласкаво просимо до банкомату!");
-            Console.Write("Введіть номер картки: ");
-            string cardNumber = Console.ReadLine();
-
-            if (!Users.ContainsKey(cardNumber))
+            if (!AuthenticateUser(out string cardNumber))
             {
-                Console.WriteLine("Картка не знайдена.");
                 return;
+            }
+
+            while (true)
+            {
+                ShowMenu();
+                string choice = Console.ReadLine();
+                if (!HandleUserChoice(choice, cardNumber))
+                {
+                    break;
+                }
+            }
+        }
+
+        private static bool AuthenticateUser(out string cardNumber)
+        {
+            Console.Write("Введіть номер картки: ");
+            cardNumber = Console.ReadLine();
+
+            if (!IsCardNumberValid(cardNumber))
+            {
+                return false;
             }
 
             Console.Write("Введіть PIN-код: ");
             string pin = Console.ReadLine();
 
-            if (Authenticate(cardNumber, pin))
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nОберіть операцію:");
-                    Console.WriteLine("1. Переглянути баланс");
-                    Console.WriteLine("2. Зняти кошти");
-                    Console.WriteLine("3. Зарахувати кошти");
-                    Console.WriteLine("4. Перерахувати кошти");
-                    Console.WriteLine("5. Вихід");
-
-                    string choice = Console.ReadLine();
-                    switch (choice)
-                    {
-                        case "1":
-                            CheckBalance(cardNumber);
-                            break;
-                        case "2":
-                            Withdraw(cardNumber);
-                            break;
-                        case "3":
-                            Deposit(cardNumber);
-                            break;
-                        case "4":
-                            TransferFunds(cardNumber);
-                            break;
-                        case "5":
-                            Console.WriteLine("Дякуємо за використання банкомату!");
-                            return;
-                        default:
-                            Console.WriteLine("Невірний вибір, спробуйте ще раз.");
-                            break;
-                    }
-                }
-            }
-            else
+            if (!Authenticate(cardNumber, pin))
             {
                 Console.WriteLine("Невірний PIN-код.");
+                return false;
             }
+
+            return true;
         }
+
+        private static bool IsCardNumberValid(string cardNumber)
+        {
+            if (!Users.ContainsKey(cardNumber))
+            {
+                Console.WriteLine("Картка не знайдена.");
+                return false;
+            }
+            return true;
+        }
+
+        private static void ShowMenu()
+        {
+            Console.WriteLine("\nОберіть операцію:");
+            Console.WriteLine("1. Переглянути баланс");
+            Console.WriteLine("2. Зняти кошти");
+            Console.WriteLine("3. Зарахувати кошти");
+            Console.WriteLine("4. Перерахувати кошти");
+            Console.WriteLine("5. Вихід");
+        }
+
+        private static bool HandleUserChoice(string choice, string cardNumber)
+        {
+            switch (choice)
+            {
+                case "1":
+                    CheckBalance(cardNumber);
+                    break;
+                case "2":
+                    Withdraw(cardNumber);
+                    break;
+                case "3":
+                    Deposit(cardNumber);
+                    break;
+                case "4":
+                    TransferFunds(cardNumber);
+                    break;
+                case "5":
+                    Console.WriteLine("Дякуємо за використання банкомату!");
+                    return false;
+                default:
+                    Console.WriteLine("Невірний вибір, спробуйте ще раз.");
+                    break;
+            }
+            return true;
+        }
+
         private static bool Authenticate(string cardNumber, string pin)
         {
             bool isAuthenticated = Users[cardNumber].Pin == pin;
             OnAuthentication?.Invoke($"Аутентифікація {(isAuthenticated ? "успішна" : "неуспішна")}.");
             return isAuthenticated;
         }
+
         private static void CheckBalance(string cardNumber)
         {
             Console.WriteLine($"Ваш баланс: {Users[cardNumber].Balance} грн.");
@@ -103,7 +136,8 @@ namespace ATMConsoleApp
             {
                 Console.WriteLine("Невірна сума.");
             }
-        }// Зарахування коштів
+        }
+
         private static void Deposit(string cardNumber)
         {
             Console.Write("Введіть суму для зарахування: ");
@@ -118,15 +152,13 @@ namespace ATMConsoleApp
             }
         }
 
-        // Перерахування коштів
         private static void TransferFunds(string fromCardNumber)
         {
             Console.Write("Введіть номер картки для переказу: ");
             string toCardNumber = Console.ReadLine();
 
-            if (!Users.ContainsKey(toCardNumber))
+            if (!IsCardNumberValid(toCardNumber))
             {
-                Console.WriteLine("Картка отримувача не знайдена.");
                 return;
             }
 

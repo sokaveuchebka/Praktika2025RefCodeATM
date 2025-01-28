@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsoleATM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d62b761252a252b5debe28fadee6244a1a9732d4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0cbc8d3078cf5b5f623a919ca04c04c37b12aea")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsoleATM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsoleATM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
