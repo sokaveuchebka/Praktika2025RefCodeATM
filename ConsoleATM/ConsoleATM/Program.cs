@@ -69,30 +69,72 @@ namespace ATMConsoleApp
             Console.WriteLine("5. Вихід");
         }
 
+        public interface IOperation
+        {
+            void Execute(string cardNumber);
+        }
+
+        public class CheckBalanceOperation : IOperation
+        {
+            public void Execute(string cardNumber)
+            {
+                Program.CheckBalance(cardNumber);
+            }
+        }
+
+        public class WithdrawOperation : IOperation
+        {
+            public void Execute(string cardNumber)
+            {
+                Program.Withdraw(cardNumber);
+            }
+        }
+
+        public class DepositOperation : IOperation
+        {
+            public void Execute(string cardNumber)
+            {
+                Program.Deposit(cardNumber);
+            }
+        }
+
+        public class TransferFundsOperation : IOperation
+        {
+            public void Execute(string cardNumber)
+            {
+                Program.TransferFunds(cardNumber);
+            }
+        }
+
+        public class ExitOperation : IOperation
+        {
+            public void Execute(string cardNumber)
+            {
+                Console.WriteLine("Дякуємо за використання банкомату!");
+            }
+        }
+
+        private static readonly Dictionary<string, IOperation> operations = new Dictionary<string, IOperation>
+        {
+            { "1", new CheckBalanceOperation() },
+            { "2", new WithdrawOperation() },
+            { "3", new DepositOperation() },
+            { "4", new TransferFundsOperation() },
+            { "5", new ExitOperation() }
+        };
+
         private static bool HandleUserChoice(string choice, string cardNumber)
         {
-            switch (choice)
+            if (operations.ContainsKey(choice))
             {
-                case "1":
-                    CheckBalance(cardNumber);
-                    break;
-                case "2":
-                    Withdraw(cardNumber);
-                    break;
-                case "3":
-                    Deposit(cardNumber);
-                    break;
-                case "4":
-                    TransferFunds(cardNumber);
-                    break;
-                case "5":
-                    Console.WriteLine("Дякуємо за використання банкомату!");
-                    return false;
-                default:
-                    Console.WriteLine("Невірний вибір, спробуйте ще раз.");
-                    break;
+                operations[choice].Execute(cardNumber);
+                return choice != "5"; // Якщо вибір "5", виходимо з програми
             }
-            return true;
+            else
+            {
+                Console.WriteLine("Невірний вибір, спробуйте ще раз.");
+                return true;
+            }
         }
 
         private static bool IsCardNumberValid(string cardNumber)
