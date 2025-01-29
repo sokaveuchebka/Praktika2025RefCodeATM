@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Артур\\Desktop\\MyConsoleATM\\ConsoleATM\\ConsoleATM\\ConsoleATM.csproj": {}
+    "C:\\Users\\svinc\\Desktop\\Praktika2025RefCodeATM\\ConsoleATM\\ConsoleATM\\ConsoleATM.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Артур\\Desktop\\MyConsoleATM\\ConsoleATM\\ConsoleATM\\ConsoleATM.csproj": {
+    "C:\\Users\\svinc\\Desktop\\Praktika2025RefCodeATM\\ConsoleATM\\ConsoleATM\\ConsoleATM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Артур\\Desktop\\MyConsoleATM\\ConsoleATM\\ConsoleATM\\ConsoleATM.csproj",
+        "projectUniqueName": "C:\\Users\\svinc\\Desktop\\Praktika2025RefCodeATM\\ConsoleATM\\ConsoleATM\\ConsoleATM.csproj",
         "projectName": "ConsoleATM",
-        "projectPath": "C:\\Users\\Артур\\Desktop\\MyConsoleATM\\ConsoleATM\\ConsoleATM\\ConsoleATM.csproj",
-        "packagesPath": "C:\\Users\\Артур\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Артур\\Desktop\\MyConsoleATM\\ConsoleATM\\ConsoleATM\\obj\\",
+        "projectPath": "C:\\Users\\svinc\\Desktop\\Praktika2025RefCodeATM\\ConsoleATM\\ConsoleATM\\ConsoleATM.csproj",
+        "packagesPath": "C:\\Users\\svinc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\svinc\\Desktop\\Praktika2025RefCodeATM\\ConsoleATM\\ConsoleATM\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Артур\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\svinc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,7 +44,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -60,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
