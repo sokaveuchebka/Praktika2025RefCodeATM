@@ -118,30 +118,22 @@ namespace ATMConsoleApp
             OnBalanceCheck?.Invoke("Перегляд балансу виконано.");
         }
 
+
         private static void Withdraw(string cardNumber)
         {
             Console.Write("Введіть суму для зняття: ");
             if (!TryGetValidAmount(Console.ReadLine(), out decimal amount)) return;
 
-            if (Users[cardNumber].Balance >= amount)
-            {
-                Users[cardNumber].Balance -= amount;
-                Console.WriteLine($"Ви зняли {amount} грн. Ваш залишок: {Users[cardNumber].Balance} грн.");
-                OnWithdrawal?.Invoke("Зняття коштів успішне.");
-            }
-            else
-            {
-                Console.WriteLine("Недостатньо коштів.");
-            }
+            ProcessAmount("withdraw", Users[cardNumber], ref amount);
         }
+
 
         private static void Deposit(string cardNumber)
         {
             Console.Write("Введіть суму для зарахування: ");
             if (!TryGetValidAmount(Console.ReadLine(), out decimal amount)) return;
 
-            Users[cardNumber].Balance += amount;
-            Console.WriteLine($"Ви зарахували {amount} грн. Ваш новий баланс: {Users[cardNumber].Balance} грн.");
+            ProcessAmount("deposit", Users[cardNumber], ref amount);
         }
 
         private static void TransferFunds(string fromCardNumber)
@@ -149,24 +141,20 @@ namespace ATMConsoleApp
             Console.Write("Введіть номер картки для переказу: ");
             string toCardNumber = Console.ReadLine();
 
-            if (!IsCardNumberValid(toCardNumber))
-            {
-                return;
-            }
+            if (!IsCardNumberValid(toCardNumber)) return;
 
             Console.Write("Введіть суму для переказу: ");
             if (!TryGetValidAmount(Console.ReadLine(), out decimal amount)) return;
 
             if (Users[fromCardNumber].Balance >= amount)
             {
-                Users[fromCardNumber].Balance -= amount;
+                ProcessAmount("transfer", Users[fromCardNumber], ref amount);
                 Users[toCardNumber].Balance += amount;
-                Console.WriteLine($"Переказ {amount} грн. успішно виконано. Ваш залишок: {Users[fromCardNumber].Balance} грн.");
                 OnFundsTransfer?.Invoke("Переказ коштів успішний.");
             }
             else
             {
-                Console.WriteLine("Недостатньо коштів.");
+                Console.WriteLine("Недостатньо коштів для переказу.");
             }
         }
 
@@ -178,6 +166,29 @@ namespace ATMConsoleApp
             }
             Console.WriteLine("Невірна сума.");
             return false;
+        }
+
+        private static void ProcessAmount(string operation, User user, ref decimal amount)
+        {
+            if (operation == "withdraw" && user.Balance >= amount)
+            {
+                user.Balance -= amount;
+                Console.WriteLine($"Ви зняли {amount} грн. Ваш залишок: {user.Balance} грн.");
+                OnWithdrawal?.Invoke("Зняття коштів успішне.");
+            }
+            else if (operation == "deposit")
+            {
+                user.Balance += amount;
+                Console.WriteLine($"Ви зарахували {amount} грн. Ваш новий баланс: {user.Balance} грн.");
+            }
+            else if (operation == "transfer")
+            {
+                Console.WriteLine($"Переказ {amount} грн. успішно виконано.");
+            }
+            else
+            {
+                Console.WriteLine("Недостатньо коштів.");
+            }
         }
     }
 
